@@ -1,0 +1,184 @@
+[gd_scene load_steps=11 format=3 uid="uid://ebp1bcyx8xxh"]
+
+[ext_resource type="Script" path="res://Scripts/bin.gd" id="1_qbwnh"]
+[ext_resource type="Shader" path="res://Shaders/skew.gdshader" id="2_i61ts"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hk7yt"]
+shader = ExtResource("2_i61ts")
+shader_parameter/skew = -1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rofjn"]
+bg_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vkati"]
+shader = ExtResource("2_i61ts")
+shader_parameter/skew = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b1xnh"]
+bg_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cjsjx"]
+bg_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ueca"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_86w6g"]
+code = "shader_type canvas_item;
+
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+void fragment(){
+	
+	vec4 color = vec4(texture(SCREEN_TEXTURE, SCREEN_UV).rgb, texture(TEXTURE, UV).a);
+	COLOR = vec4(1.0 - color.rgb,  color.a);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cw4ah"]
+resource_local_to_scene = true
+shader = SubResource("Shader_86w6g")
+
+[node name="Bin" type="Control" groups=["bin"]]
+z_index = 200
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qbwnh")
+
+[node name="InsideContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.162
+offset_left = 2.0
+offset_top = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="InsideContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ReferenceRect" type="ReferenceRect" parent="InsideContainer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+border_color = Color(1, 1, 1, 1)
+editor_only = false
+
+[node name="DoorContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Control" type="Control" parent="DoorContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect" type="Panel" parent="DoorContainer/Control"]
+material = SubResource("ShaderMaterial_hk7yt")
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rofjn")
+
+[node name="Control2" type="Control" parent="DoorContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect" type="Panel" parent="DoorContainer/Control2"]
+material = SubResource("ShaderMaterial_vkati")
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rofjn")
+
+[node name="LabelsContainer" type="VBoxContainer" parent="."]
+z_index = 200
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BinNumberLabel" type="Label" parent="LabelsContainer"]
+z_index = 200
+z_as_relative = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_b1xnh")
+text = "01"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressContainer" type="Control" parent="LabelsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="LabelsContainer/ProgressContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_cjsjx")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1ueca")
+value = 13.61
+show_percentage = false
+
+[node name="ProgressLabel" type="Label" parent="LabelsContainer/ProgressContainer"]
+z_index = 10
+material = SubResource("ShaderMaterial_cw4ah")
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "10%"
+vertical_alignment = 1

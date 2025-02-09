@@ -1,0 +1,301 @@
+[gd_scene load_steps=11 format=3 uid="uid://c1clntmnkh5py"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_argit"]
+[ext_resource type="Shader" path="res://Shaders/crt.gdshader" id="2_afh4f"]
+[ext_resource type="FontFile" uid="uid://cso7neh2vu47e" path="res://NotoSans-Regular.ttf" id="3_p6vnr"]
+[ext_resource type="Texture2D" uid="uid://bpl4nchlkv3dh" path="res://lumon-logo.webp" id="4_6fql7"]
+[ext_resource type="PackedScene" uid="uid://ebp1bcyx8xxh" path="res://Scenes/bin.tscn" id="5_uxxv1"]
+
+[sub_resource type="Environment" id="Environment_fw1a8"]
+background_mode = 3
+ambient_light_source = 1
+ambient_light_color = Color(1, 1, 1, 1)
+reflected_light_source = 1
+tonemap_white = 0.1
+glow_enabled = true
+glow_intensity = 0.18
+glow_bloom = 1.0
+adjustment_enabled = true
+adjustment_brightness = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3guut"]
+shader = ExtResource("2_afh4f")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.01
+shader_parameter/scanlines_width = 0.5
+shader_parameter/grille_opacity = 0.01
+shader_parameter/resolution = Vector2(1200, 800)
+shader_parameter/pixelate = false
+shader_parameter/roll = false
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 0.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.05
+shader_parameter/noise_opacity = 0.3
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.01
+shader_parameter/aberration = 0.00500005
+shader_parameter/brightness = 1.0
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.15
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.234
+
+[sub_resource type="QuadMesh" id="QuadMesh_2c1rd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_an6jg"]
+content_margin_left = 18.0
+bg_color = Color(0.866667, 0.843137, 0.847059, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5fbhs"]
+blend_mode = 1
+
+[node name="Screen" type="Node2D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fw1a8")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CrtEffect" type="MeshInstance2D" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_3guut")
+position = Vector2(600, 400)
+scale = Vector2(1200, -800)
+mesh = SubResource("QuadMesh_2c1rd")
+
+[node name="NumberContainer" type="Node2D" parent="."]
+script = ExtResource("1_argit")
+
+[node name="TopUIBackground" type="ColorRect" parent="."]
+z_index = 100
+z_as_relative = false
+offset_right = 1200.0
+offset_bottom = 120.0
+color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="TopUIBackground"]
+layout_mode = 0
+offset_top = 116.0
+offset_right = 1200.0
+offset_bottom = 118.0
+
+[node name="ColorRect" type="ColorRect" parent="TopUIBackground"]
+layout_mode = 0
+offset_top = 120.0
+offset_right = 1200.0
+offset_bottom = 122.0
+
+[node name="BottomUIBackground" type="ColorRect" parent="."]
+z_index = 100
+z_as_relative = false
+offset_top = 640.0
+offset_right = 1200.0
+offset_bottom = 800.0
+color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="BottomUIBackground"]
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 2.0
+
+[node name="ColorRect3" type="ColorRect" parent="BottomUIBackground"]
+layout_mode = 0
+offset_top = 116.0
+offset_right = 1200.0
+offset_bottom = 117.0
+
+[node name="ColorRect" type="ColorRect" parent="BottomUIBackground"]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 1200.0
+offset_bottom = 6.0
+
+[node name="Label" type="Label" parent="BottomUIBackground"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -43.0
+offset_right = 1204.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_p6vnr")
+theme_override_font_sizes/font_size = 20
+text = "0xBEEEEEEF    :    0xBEEEEEEF"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TopUI" type="Control" parent="."]
+z_index = 100
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1200.0
+offset_bottom = 120.0
+
+[node name="MarginContainer" type="MarginContainer" parent="TopUI"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 34
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 36
+
+[node name="Control" type="Control" parent="TopUI/MarginContainer"]
+layout_mode = 2
+
+[node name="LabelsContainer" type="HBoxContainer" parent="TopUI/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = -160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FilenameLabel" type="Label" parent="TopUI/MarginContainer/Control/LabelsContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("3_p6vnr")
+theme_override_font_sizes/font_size = 30
+text = "Wozelms"
+vertical_alignment = 1
+
+[node name="CompletionLabel" type="Label" parent="TopUI/MarginContainer/Control/LabelsContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_p6vnr")
+theme_override_font_sizes/font_size = 30
+text = "0% Complete"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Borders" type="Panel" parent="TopUI/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_an6jg")
+
+[node name="LogoContainer" type="Control" parent="TopUI/MarginContainer"]
+layout_mode = 2
+
+[node name="Logo" type="Sprite2D" parent="TopUI/MarginContainer/LogoContainer"]
+z_index = 100
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_5fbhs")
+position = Vector2(1020.18, 26)
+scale = Vector2(0.495413, 0.495413)
+texture = ExtResource("4_6fql7")
+
+[node name="BottomUI" type="Control" parent="."]
+z_index = 100
+layout_mode = 3
+anchors_preset = 0
+offset_top = 640.0
+offset_right = 1200.0
+offset_bottom = 760.0
+
+[node name="MarginContainer" type="MarginContainer" parent="BottomUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 20
+
+[node name="BinsContainer" type="HBoxContainer" parent="BottomUI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Bin01Container" type="Control" parent="BottomUI/MarginContainer/BinsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Bin01" parent="BottomUI/MarginContainer/BinsContainer/Bin01Container" instance=ExtResource("5_uxxv1")]
+z_as_relative = false
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 176.0
+offset_bottom = 80.0
+size_flags_horizontal = 3
+
+[node name="Bin02Container" type="Control" parent="BottomUI/MarginContainer/BinsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Bin02" parent="BottomUI/MarginContainer/BinsContainer/Bin02Container" instance=ExtResource("5_uxxv1")]
+z_as_relative = false
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 176.0
+offset_bottom = 80.0
+size_flags_horizontal = 3
+label = "02"
+
+[node name="Bin03Container" type="Control" parent="BottomUI/MarginContainer/BinsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Bin03" parent="BottomUI/MarginContainer/BinsContainer/Bin03Container" instance=ExtResource("5_uxxv1")]
+z_as_relative = false
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 176.0
+offset_bottom = 80.0
+size_flags_horizontal = 3
+label = "03"
+
+[node name="Bin04Container" type="Control" parent="BottomUI/MarginContainer/BinsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Bin04" parent="BottomUI/MarginContainer/BinsContainer/Bin04Container" instance=ExtResource("5_uxxv1")]
+z_as_relative = false
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 176.0
+offset_bottom = 80.0
+size_flags_horizontal = 3
+label = "04"
+
+[node name="Bin05Container" type="Control" parent="BottomUI/MarginContainer/BinsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Bin05" parent="BottomUI/MarginContainer/BinsContainer/Bin05Container" instance=ExtResource("5_uxxv1")]
+z_as_relative = false
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 176.0
+offset_bottom = 80.0
+size_flags_horizontal = 3
+label = "05"
