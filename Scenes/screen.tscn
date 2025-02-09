@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_argit"]
 [ext_resource type="Shader" path="res://Shaders/crt.gdshader" id="2_afh4f"]
 [ext_resource type="FontFile" uid="uid://cso7neh2vu47e" path="res://NotoSans-Regular.ttf" id="3_p6vnr"]
-[ext_resource type="Texture2D" uid="uid://bpl4nchlkv3dh" path="res://lumon-logo.webp" id="4_6fql7"]
+[ext_resource type="Texture2D" uid="uid://b48k74x7ytn5v" path="res://lumon-logo.png" id="4_q5qqj"]
 [ext_resource type="PackedScene" uid="uid://ebp1bcyx8xxh" path="res://Scenes/bin.tscn" id="5_uxxv1"]
 
 [sub_resource type="Environment" id="Environment_fw1a8"]
@@ -44,17 +44,15 @@ shader_parameter/vignette_opacity = 0.234
 
 [sub_resource type="QuadMesh" id="QuadMesh_2c1rd"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5fbhs"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_an6jg"]
-content_margin_left = 18.0
 bg_color = Color(0.866667, 0.843137, 0.847059, 0)
 border_width_left = 2
 border_width_top = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 anti_aliasing = false
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5fbhs"]
-blend_mode = 1
 
 [node name="Screen" type="Node2D"]
 
@@ -81,7 +79,7 @@ color = Color(0.0666667, 0.0666667, 0.0666667, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="TopUIBackground"]
 layout_mode = 0
-offset_top = 116.0
+offset_top = 115.0
 offset_right = 1200.0
 offset_bottom = 118.0
 
@@ -89,7 +87,7 @@ offset_bottom = 118.0
 layout_mode = 0
 offset_top = 120.0
 offset_right = 1200.0
-offset_bottom = 122.0
+offset_bottom = 123.0
 
 [node name="BottomUIBackground" type="ColorRect" parent="."]
 z_index = 100
@@ -102,19 +100,19 @@ color = Color(0.0666667, 0.0666667, 0.0666667, 1)
 [node name="ColorRect2" type="ColorRect" parent="BottomUIBackground"]
 layout_mode = 0
 offset_right = 1200.0
-offset_bottom = 2.0
+offset_bottom = 3.0
 
 [node name="ColorRect3" type="ColorRect" parent="BottomUIBackground"]
 layout_mode = 0
 offset_top = 116.0
 offset_right = 1200.0
-offset_bottom = 117.0
+offset_bottom = 119.0
 
 [node name="ColorRect" type="ColorRect" parent="BottomUIBackground"]
 layout_mode = 0
-offset_top = 4.0
+offset_top = 5.0
 offset_right = 1200.0
-offset_bottom = 6.0
+offset_bottom = 8.0
 
 [node name="Label" type="Label" parent="BottomUIBackground"]
 layout_mode = 1
@@ -151,6 +149,21 @@ theme_override_constants/margin_top = 34
 theme_override_constants/margin_right = 60
 theme_override_constants/margin_bottom = 36
 
+[node name="LogoContainer" type="Control" parent="TopUI/MarginContainer"]
+layout_mode = 2
+
+[node name="Logo" type="Sprite2D" parent="TopUI/MarginContainer/LogoContainer"]
+z_index = 100
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_5fbhs")
+position = Vector2(1018.62, 25.5)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_q5qqj")
+
+[node name="Borders2" type="Panel" parent="TopUI/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_an6jg")
+
 [node name="Control" type="Control" parent="TopUI/MarginContainer"]
 layout_mode = 2
 
@@ -159,7 +172,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
+offset_left = 10.0
 offset_right = -160.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -180,27 +193,12 @@ layout_mode = 2
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 5
+theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("3_p6vnr")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 32
 text = "0% Complete"
 horizontal_alignment = 2
 vertical_alignment = 1
-
-[node name="Borders" type="Panel" parent="TopUI/MarginContainer"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_an6jg")
-
-[node name="LogoContainer" type="Control" parent="TopUI/MarginContainer"]
-layout_mode = 2
-
-[node name="Logo" type="Sprite2D" parent="TopUI/MarginContainer/LogoContainer"]
-z_index = 100
-texture_filter = 1
-material = SubResource("CanvasItemMaterial_5fbhs")
-position = Vector2(1020.18, 26)
-scale = Vector2(0.495413, 0.495413)
-texture = ExtResource("4_6fql7")
 
 [node name="BottomUI" type="Control" parent="."]
 z_index = 100

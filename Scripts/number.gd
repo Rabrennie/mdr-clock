@@ -1,14 +1,14 @@
 extends Node2D
 
 var font = preload("res://NotoSans-Regular.ttf")
-var font_color = Color.from_string('#999', Color.DODGER_BLUE)
+var font_color = Color.from_string('#777', Color.DODGER_BLUE)
 
 var tween: Tween
 
 var x: int
 var y: int
 
-var base_text_size = 40
+var base_text_size = 50
 
 @export var text: String = str(randi_range(0, 9)):
     set(value):
@@ -36,7 +36,13 @@ func _ready():
     noise.frequency = 0.015
     
 func _draw() -> void:
-    draw_char(font, Vector2(0,0), text, base_text_size * text_scale, font_color.lightened((text_scale - 0.5) / 10))
+    draw_char(
+        font,
+        Vector2(0,0),
+        text,
+        base_text_size * text_scale,
+        font_color.lightened(text_scale - 0.5)
+    )
 
 func _process(delta: float) -> void:
     var t = 0
